@@ -3,30 +3,49 @@ import {Pressable, Text, TextInput, View} from "react-native";
 import {Colors} from "../Constants/Color";
 import {GlobalStyel} from "../Styles/Global";
 import {MaterialIcons} from '@expo/vector-icons';
+import {useGlobalHook} from "../Hooks/Context";
 
 const Register = ({navigation}) => {
+
+    const {registerInpData, registerChangeHandler, submitHandler, isAllData} = useGlobalHook();
+
     return (
         <View style={{flex: 1, backgroundColor: "white", paddingHorizontal: 30, justifyContent: "center", gap: 30,}}>
             <Text style={{fontSize: 28, fontWeight: "bold", color: Colors.secondery}}>SignUp</Text>
             <View style={[GlobalStyel.rowFlex, GlobalStyel.inputFeild]}>
                 <MaterialIcons name="person" size={24} color={Colors.secondery}/>
-                <TextInput placeholder={"Name"}/>
+                <TextInput placeholder={"Name"} name="name" value={registerInpData.name} onChangeText={(e) => {
+                    registerChangeHandler("name", e)
+                }}/>
             </View>
             <View style={[GlobalStyel.rowFlex, GlobalStyel.inputFeild]}>
                 <MaterialIcons name="email" size={22} color={Colors.secondery}/>
-                <TextInput placeholder={"Email Address"} style={{color: "#8f8888"}}/>
+                <TextInput placeholder={"Email Address"} name="email"
+                           value={registerInpData.email}
+                           onChangeText={(event) => registerChangeHandler("email", event)}/>
             </View>
             <View style={[GlobalStyel.rowFlex, GlobalStyel.inputFeild]}>
                 <MaterialIcons name="lock-open" size={24} color={Colors.secondery}/>
-                <TextInput placeholder={"Password"} secureTextEntry/>
+                <TextInput placeholder={"Password"} secureTextEntry name={"pass"} value={registerInpData.pass}
+                           onChangeText={(event) => registerChangeHandler("pass", event)}/>
             </View>
             <View style={[GlobalStyel.rowFlex, GlobalStyel.inputFeild]}>
                 <MaterialIcons name="lock" size={24} color={Colors.secondery}/>
-                <TextInput placeholder={"Confirm Password"} secureTextEntry/>
+                <TextInput placeholder={"Confirm Password"} secureTextEntry name={"cPass"}
+                           value={registerInpData.cPass}
+                           onChangeText={(event) => registerChangeHandler("cPass", event)}/>
             </View>
-            <Pressable style={[GlobalStyel.btnRed, GlobalStyel.rowFlex, {borderRadius: 7}]}>
+
+            {/*-------------------------------------- button for sign up -------------------------------*/}
+            <Pressable style={[GlobalStyel.btnRed, GlobalStyel.rowFlex, {
+                borderRadius: 7,
+                backgroundColor: isAllData ? Colors.primary : Colors.secondery
+            }]} onPress={submitHandler}
+                       disabled={!isAllData}>
                 <Text style={GlobalStyel.textWhite}>Signup</Text>
             </Pressable>
+
+            {/*------------------------------------sign in section -------------------------------------*/}
             <View style={GlobalStyel.rowFlex}>
                 <Text style={{fontSize: 16, color: Colors.secondery}}>Already have an account?</Text>
                 <Pressable onPress={() => {
