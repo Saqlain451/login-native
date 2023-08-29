@@ -3,7 +3,7 @@ import React, {useContext, useState} from "react";
 const appContext = React.createContext(undefined, undefined);
 
 const AppProvider = ({children}) => {
-    // ---------------------- Register part ----------------------->
+    // >---------------------- Register part ----------------------->
     const [registerInpData, setRegisterInpData] = useState({
         name: "",
         email: "",
@@ -14,6 +14,7 @@ const AppProvider = ({children}) => {
     const [isAllData, setIsAllData] = useState(false);
 
     const registerChangeHandler = (name, value) => {
+        setIsAllData(false);
         setRegisterInpData({...registerInpData, [name]: value});
         if (registerInpData.name && registerInpData.email && registerInpData.pass && registerInpData.cPass) {
             setIsAllData(true);

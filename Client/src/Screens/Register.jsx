@@ -37,12 +37,11 @@ const Register = ({navigation}) => {
             </View>
 
             {/*-------------------------------------- button for sign up -------------------------------*/}
-            <Pressable style={[GlobalStyel.btnRed, GlobalStyel.rowFlex, {
-                borderRadius: 7,
-                backgroundColor: isAllData ? Colors.primary : Colors.secondery
-            }]} onPress={submitHandler}
-                       disabled={!isAllData}>
-                <Text style={GlobalStyel.textWhite}>Signup</Text>
+            <Pressable
+                style={isAllData ? [GlobalStyel.btnRed, GlobalStyel.rowFlex, {borderRadius: 7}] : [GlobalStyel.btnRed, GlobalStyel.btnOutlineRed, GlobalStyel.rowFlex, {borderRadius: 7}]}
+                onPress={submitHandler}
+                disabled={!isAllData}>
+                <Text style={isAllData? GlobalStyel.textWhite : GlobalStyel.textRed}>Signup</Text>
             </Pressable>
 
             {/*------------------------------------sign in section -------------------------------------*/}

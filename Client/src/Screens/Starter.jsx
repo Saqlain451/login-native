@@ -1,6 +1,6 @@
 import {Image, Pressable, Text, View} from "react-native";
 import React from "react";
-import Login from "../assets/Images/login.jpg";
+import Login from "../../assets/Images/login.jpg";
 import {GlobalStyel} from "../Styles/Global";
 import {Colors} from "../Constants/Color";
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, Pressable, Text, TextInput, View} from "react-native";
-import LoginImg from '../assets/Images/login.jpg'
+import LoginImg from '../../assets/Images/login.jpg'
 import {Colors} from "../Constants/Color";
 import {GlobalStyel} from "../Styles/Global";
 import {MaterialIcons} from "@expo/vector-icons";
