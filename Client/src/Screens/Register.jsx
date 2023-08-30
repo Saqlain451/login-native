@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, Text, TextInput, View} from "react-native";
+import {ActivityIndicator, Pressable, Text, TextInput, View} from "react-native";
 import {Colors} from "../Constants/Color";
 import {GlobalStyel} from "../Styles/Global";
 import {MaterialIcons} from '@expo/vector-icons';
@@ -7,7 +7,8 @@ import {useGlobalHook} from "../Hooks/Context";
 
 const Register = ({navigation}) => {
 
-    const {registerInpData, registerChangeHandler, submitHandler, isAllData} = useGlobalHook();
+    const {registerInpData, registerChangeHandler, submitHandler, isAllData, isLoading} = useGlobalHook();
+
 
     return (
         <View style={{flex: 1, backgroundColor: "white", paddingHorizontal: 30, justifyContent: "center", gap: 30,}}>
@@ -41,7 +42,9 @@ const Register = ({navigation}) => {
                 style={isAllData ? [GlobalStyel.btnRed, GlobalStyel.rowFlex, {borderRadius: 7}] : [GlobalStyel.btnRed, GlobalStyel.btnOutlineRed, GlobalStyel.rowFlex, {borderRadius: 7}]}
                 onPress={submitHandler}
                 disabled={!isAllData}>
-                <Text style={isAllData? GlobalStyel.textWhite : GlobalStyel.textRed}>Signup</Text>
+                {isLoading ? <ActivityIndicator color={"white"} size={"large"}/> :
+                    <Text style={isAllData ? GlobalStyel.textWhite : GlobalStyel.textRed}>Signup</Text>}
+
             </Pressable>
 
             {/*------------------------------------sign in section -------------------------------------*/}

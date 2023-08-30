@@ -1,4 +1,5 @@
 import user from "../Model/userModel.js";
+import bcrypt from 'bcryptjs';
 
 const addUser = async (req, res) => {
     const {name, email, pass, cPass} = req.body
@@ -13,8 +14,9 @@ const addUser = async (req, res) => {
         } else if (pass !== cPass) {
             return res.status(401).json({err: "Password and Confirm Password should be same"})
         }
-
-        const newUser = new user({...req.body})
+        const hashPass = await bcrypt.hash(pass, 12);
+        const hashCPass = await bcrypt.hash(cPass, 12);
+        const newUser = new user({...req.body, hashPass, hashCPass})
         await newUser.save()
         res.status(201).json({msg: "Congrats! You are Registered on our Platform"})
 

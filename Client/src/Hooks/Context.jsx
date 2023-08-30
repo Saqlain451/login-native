@@ -1,10 +1,12 @@
 import React, {useContext, useState} from "react";
+import axios from "axios";
+import {Alert} from "react-native";
 
 const appContext = React.createContext(undefined, undefined);
 
 const AppProvider = ({children}) => {
 
-    const api = "http://localhost:4000"
+    const api = "https://login-native.onrender.com"
     // >---------------------- Register part ----------------------->
     const [registerInpData, setRegisterInpData] = useState({
         name: "",
@@ -14,6 +16,7 @@ const AppProvider = ({children}) => {
     })
 
     const [isAllData, setIsAllData] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const registerChangeHandler = (name, value) => {
         setIsAllData(false);
@@ -24,23 +27,27 @@ const AppProvider = ({children}) => {
     }
 
     const submitHandler = async () => {
+        setIsLoading(true);
         try {
-            const data = await fetch("http://localhost:4000/register", {
-                method: 'POST',
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({...registerInpData}),
-            })
-            const res = data.json();
-            console.log(res);
+            const response = await axios.post(`${api}/register`, registerInpData)
+            console.log(response.data.msg);
+            if (response.data.msg) {
+                setIsLoading(false);
+                Alert.alert(response.data.msg);
+            }
         } catch (error) {
-            console.error(error)
+            if (error) {
+                Alert.alert(error.response.data.err);
+            }
+        } finally {
+            setIsLoading(false);
         }
     }
 
 
     return (
         <appContext.Provider
-            value={{registerInpData, registerChangeHandler, submitHandler, isAllData}}
+            value={{registerInpData, registerChangeHandler, submitHandler, isAllData, isLoading}}
         >
             {children}
         </appContext.Provider>
