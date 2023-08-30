@@ -42,7 +42,6 @@ const validateUser = async (req, res) => {
             return res.status(401).json({err: "Invalid Credential"})
         }
         const token = jwt.sign({_id: existUser._id}, process.env.SECRET_KEY, {expiresIn: '1h'});
-        console.log({token});
         existUser.refreshToken = token;
         await existUser.save();
         await res.status(201).json({token, msg: "Log in successful"})

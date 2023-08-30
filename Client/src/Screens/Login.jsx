@@ -6,6 +6,7 @@ import {GlobalStyel} from "../Styles/Global";
 import {MaterialIcons} from "@expo/vector-icons";
 import axios from "axios";
 import {useGlobalHook} from "../Hooks/Context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = ({navigation}) => {
     const {api} = useGlobalHook();
@@ -22,9 +23,10 @@ const Login = ({navigation}) => {
         setIsLoading(true);
         try {
             const response = await axios.post(`${api}/login`, logInData);
-            console.log(response);
-            if (response.data.msg) {
+
+            if (response.data.token) {
                 setIsLoading(false);
+                await AsyncStorage.setItem('token', response.data.token);
                 Alert.alert(response.data.msg);
                 setLoginData({
                     email: "",
