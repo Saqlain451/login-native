@@ -16,7 +16,7 @@ const addUser = async (req, res) => {
         }
         const hashPass = await bcrypt.hash(pass, 12);
         const hashCPass = await bcrypt.hash(cPass, 12);
-        const newUser = new user({...req.body, hashPass, hashCPass})
+        const newUser = new user({...req.body, pass : hashPass, cPass: hashCPass})
         await newUser.save()
         res.status(201).json({msg: "Congrats! You are Registered on our Platform"})
 
