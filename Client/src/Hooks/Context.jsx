@@ -34,6 +34,12 @@ const AppProvider = ({children}) => {
             if (response.data.msg) {
                 setIsLoading(false);
                 Alert.alert(response.data.msg);
+                setRegisterInpData({
+                    name: "",
+                    email: "",
+                    pass: "",
+                    cPass: ""
+                })
             }
         } catch (error) {
             if (error) {
