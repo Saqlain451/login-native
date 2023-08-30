@@ -1,5 +1,9 @@
 import user from "../Model/userModel.js";
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import env from 'dotenv';
+
+env.config();
 
 const addUser = async (req, res) => {
     const {name, email, pass, cPass} = req.body
@@ -37,7 +41,12 @@ const validateUser = async (req, res) => {
         if (!existUser || !compPass) {
             return res.status(401).json({err: "Invalid Credential"})
         }
-        await res.status(201).json({msg: "Log in successful"})
+        const token = jwt.sign({_id: existUser._id}, process.env.SECRET_KEY, {expiresIn: '1h'});
+        console.log({token});
+        existUser.refreshToken = token;
+        await existUser.save();
+        await res.status(201).json({token, msg: "Log in successful"})
+
     } catch (error) {
         await res.status(401).json({err: error})
     }
