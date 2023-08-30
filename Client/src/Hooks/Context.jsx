@@ -1,12 +1,13 @@
 import React, {useContext, useState} from "react";
 import axios from "axios";
 import {Alert} from "react-native";
-
+import {API_URL} from "@env"
 const appContext = React.createContext(undefined, undefined);
 
 const AppProvider = ({children}) => {
 
-    const api = "https://login-native.onrender.com"
+    const api = API_URL;
+
     // >---------------------- Register part ----------------------->
     const [registerInpData, setRegisterInpData] = useState({
         name: "",
@@ -51,9 +52,11 @@ const AppProvider = ({children}) => {
     }
 
 
+
+
     return (
         <appContext.Provider
-            value={{registerInpData, registerChangeHandler, submitHandler, isAllData, isLoading}}
+            value={{registerInpData, registerChangeHandler, submitHandler, isAllData, isLoading, api}}
         >
             {children}
         </appContext.Provider>

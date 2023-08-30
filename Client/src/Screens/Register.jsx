@@ -7,7 +7,7 @@ import {useGlobalHook} from "../Hooks/Context";
 
 const Register = ({navigation}) => {
 
-    const {registerInpData, registerChangeHandler, submitHandler, isAllData, isLoading} = useGlobalHook();
+    const {registerInpData, registerChangeHandler, submitHandler, isAllData, isLoading, api} = useGlobalHook();
 
 
     return (
