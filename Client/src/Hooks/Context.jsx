@@ -3,6 +3,8 @@ import React, {useContext, useState} from "react";
 const appContext = React.createContext(undefined, undefined);
 
 const AppProvider = ({children}) => {
+
+    const api = "http://localhost:4000"
     // >---------------------- Register part ----------------------->
     const [registerInpData, setRegisterInpData] = useState({
         name: "",
@@ -21,8 +23,18 @@ const AppProvider = ({children}) => {
         }
     }
 
-    const submitHandler = () => {
-        console.log(registerInpData);
+    const submitHandler = async () => {
+        try {
+            const data = await fetch("http://localhost:4000/register", {
+                method: 'POST',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({...registerInpData}),
+            })
+            const res = data.json();
+            console.log(res);
+        } catch (error) {
+            console.error(error)
+        }
     }
 
 
