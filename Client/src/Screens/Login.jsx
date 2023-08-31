@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, Alert, Image, Pressable, Text, TextInput, View} from "react-native";
 import LoginImg from '../../assets/Images/login.jpg'
 import {Colors} from "../Constants/Color";
@@ -32,15 +32,33 @@ const Login = ({navigation}) => {
                     email: "",
                     pass: ""
                 })
-
+                navigation.navigate("Home");
             }
         } catch (error) {
             console.log(error)
-            Alert.alert(error.response.data.err);
+            if (error.response.data) {
+                Alert.alert(error.response.data.err);
+            } else {
+                Alert.alert("Internal Server error");
+            }
+
+
         } finally {
             setIsLoading(false);
         }
     }
+
+    const checkToken = async () => {
+        const token = await AsyncStorage.getItem("token") || null;
+        if (token) {
+            navigation.navigate("Home");
+        }
+    }
+
+    useEffect(() => {
+
+        checkToken()
+    }, [navigation]);
 
     return (
         <View style={{flex: 1, backgroundColor: "white", paddingHorizontal: 30, justifyContent: "center", gap: 10,}}>
